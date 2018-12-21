@@ -1,0 +1,26 @@
+context Punkt
+  inv: self.lokalizacja <> ""
+  inv: self.nazwa <> ""
+
+context Odcinek
+  inv: self.punkty->size() = 2
+  inv: Odcinek.allInstances->forAll(o1, o2 | o1 <> o2 implies o1.id <> o2.id)
+
+context Trasa
+  inv: self.odcinki->size() > 0
+  inv: self.region->size() > 0
+  inv: self.odcinki->forAll(o1, o2 | o1 <> o2)
+  inv: Sequence{0..self.odcinki()->size()}->forAll(i: Integer |
+        self.odcinki->at(i).punkty->at(1) = self.odcinki->at(i+1).punkty->at(0))	//każdy następny odcinek trasy, musi zacząć się w punkcie, w którym skoñczył się poprzedni
+
+context Trasa::czyOdbyta(): Boolean
+  derive: self.przodownik->size() = self.region->size()	//przodownik potwierdza osobno każdy region trasy
+
+context Turysta
+  inv: self.punkty >= 0
+  inv: self.wiek >= 5
+  inv: Turysta.allInstances.forAll(t1, t2 | t1 <> t2 implies t1.pesel <> t2.pesel)
+
+context Turysta::dodajPunkty(trasa: Trasa): Integer
+  pre: trasa.czyOdbyta() = true and self.administrator->notEmpty()	//tylko zweryfikowany użytkownik mo¿e zbierać punkty, tj. musi mieć przypisanego administratora, który go potwierdził
+  post: self.punkty = self.punkty@pre + trasa.wartosc_punktowa
