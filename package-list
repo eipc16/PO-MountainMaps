@@ -1,0 +1,10 @@
+com.po.pwr.mountainmaps
+com.po.pwr.mountainmaps.Activities
+com.po.pwr.mountainmaps.Fragments.Badge
+com.po.pwr.mountainmaps.Fragments.HikingTrails
+com.po.pwr.mountainmaps.Fragments.Settings
+com.po.pwr.mountainmaps.Models
+com.po.pwr.mountainmaps.Utils.Adapters
+com.po.pwr.mountainmaps.Utils.Helpers
+com.po.pwr.mountainmaps.Utils.Listeners
+com.po.pwr.mountainmaps.Utils.Tasks
